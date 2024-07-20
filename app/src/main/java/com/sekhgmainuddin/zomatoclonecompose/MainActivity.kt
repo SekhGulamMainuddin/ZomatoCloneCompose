@@ -4,14 +4,23 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.sekhgmainuddin.zomatoclonecompose.ui.theme.ZomatoCloneComposeTheme
+import com.ramcosta.composedestinations.DestinationsNavHost
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootGraph
+import com.ramcosta.composedestinations.generated.NavGraphs
+import com.ramcosta.composedestinations.generated.destinations.MainScreenDestination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.sekhgmainuddin.zomatoclonecompose.core.ui.theme.ZomatoCloneComposeTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,12 +28,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ZomatoCloneComposeTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                DestinationsNavHost(navGraph = NavGraphs.root)
             }
         }
     }
@@ -43,5 +47,34 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 fun GreetingPreview() {
     ZomatoCloneComposeTheme {
         Greeting("Android")
+    }
+}
+
+@Destination<RootGraph>(start = true)
+@Composable
+fun HomeScreen(navigator: DestinationsNavigator) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Blue),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(text = "Home Screen")
+        Button(onClick = { navigator.navigate(MainScreenDestination,) }) {
+            Text(text = "Go to Main")
+        }
+    }
+}
+
+@Destination<RootGraph>()
+@Composable
+fun MainScreen(navigator: DestinationsNavigator) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Blue),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(text = "Home Screen")
     }
 }

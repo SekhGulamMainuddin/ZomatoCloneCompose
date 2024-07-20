@@ -1,4 +1,4 @@
-package com.sekhgmainuddin.zomatoclonecompose.ui.theme
+package com.sekhgmainuddin.zomatoclonecompose.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
